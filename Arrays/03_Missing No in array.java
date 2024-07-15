@@ -33,3 +33,7 @@ Explanation:
 Initialize two variables, x1 and x2, to store the XOR of all elements in the array and the XOR of all integers from 1 to n, respectively. The first loop XORs all 
 elements of the array, while the second loop XORs all integers from 1 to n. The missing number is determined by XORing the results of x1 and x2, as the XOR 
 operation will cancel out all duplicate numbers and leave only the missing number.
+
+First Loop: Starts from i = 1 because x1 already includes the first element of the array.
+Second Loop: Starts from i = 2 because x2 already includes the number 1.
+Both loops ensure that all relevant elements and numbers are XORed, allowing the final XOR (x1 ^ x2) to yield the missing number.
