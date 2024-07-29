@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class GeeksForGeeks {
+public class Solution {
     public static void printPattern(int n)
     {
         int i, j;
@@ -22,3 +22,11 @@ public class GeeksForGeeks {
         printPattern(n);
     }
 }
+
+Solution : 
+     * 
+    * * 
+   * * * 
+  * * * * 
+ * * * * * 
+* * * * * * 
