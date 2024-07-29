@@ -31,3 +31,11 @@ public class Solution {
         printPattern(n);
     }
 }
+
+Solution : 
+     *
+    * *
+   *   *
+  *     *
+ *       *
+***********
