@@ -11,9 +11,7 @@ public class Solution {
             for (j = 0; j <= i; j++) {            // inner loop to print stars.
                 System.out.print("* ");
             }
-
-            // printing new line for each row
-            System.out.println();
+            System.out.println();                    // printing new line for each row
         }
     }
     public static void main(String args[])
