@@ -1,4 +1,4 @@
-public class GeeksForGeeks {
+public class Main {
     public static void printPattern(int n)
     {
         int i, j;
