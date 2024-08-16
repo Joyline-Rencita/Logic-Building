@@ -16,7 +16,7 @@ class Main {
     animals.addLast("Zebra");
     System.out.println("LinkedList after addLast(): " + animals);
 
-    // remove the first element
+    // remove the first element of the list
     animals.removeFirst();
     System.out.println("LinkedList after removeFirst(): " + animals);
 
