@@ -17,7 +17,7 @@ class MyLinkedList {
     }
     
     
-    /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
+    /** Get the value of the index-th node in the linked list. If the index is invalid, return -1 */
     public int get(int index) {
         if(index < 0 || index >= this.length) {
             return -1;
