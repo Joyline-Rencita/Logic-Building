@@ -18,7 +18,7 @@ class Solution
 {
     //Function to merge the arrays.
     public static void merge(long arr1[], long arr2[], int n, int m) {
-        // Declare 2 pointers:
+        // Declare the 2 pointers:
         int left = n - 1;  // pointer for arr1
         int right = 0;     // pointer for arr2
 
