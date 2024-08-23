@@ -7,7 +7,7 @@ public class Main {
                 System.out.print(" ");
             }
             for (j = i; j >= 1; j--) {
-                System.out.print(j + " ");                   // inner loop to print the first part
+                System.out.print(j + " ");                   // inner loop to print the first part ie the left side
             }
             for (j = 2; j <= i; j++) {
                 System.out.print(j + " ");                   // inner loop to print the second part
