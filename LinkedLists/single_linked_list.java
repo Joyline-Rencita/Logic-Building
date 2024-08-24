@@ -96,12 +96,12 @@ class SinglyLinkedList {
     public void reverseList() {
         Node prev = null, current = head, next;
         while (current != null) {
-            next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
+            next = current.next; // store the next node
+            current.next = prev; // reverse the link
+            prev = current; // move prev one step forward
+            current = next; // move current one step forward
         }
-        head = prev;
+        head = prev; // update head to the new front of the list
     }
 
     /* Function to display the elements of the linked list */
