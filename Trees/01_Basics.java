@@ -1,20 +1,21 @@
-class TreeNode {
+class Node {
     int data;
-    TreeNode left, right;
+    Node left, right;
 
-    public TreeNode(int item) {
+    // Constructor to create a new node
+    public Node(int item) {
         data = item;
         left = right = null;
     }
 }
 
 class BinaryTree {
-    TreeNode root;
+    Node root;
 
     // Insert a node in the binary search tree
-    TreeNode insert(TreeNode root, int data) {
+    Node insert(Node root, int data) {
         if (root == null) {
-            root = new TreeNode(data);
+            root = new Node(data);
             return root;
         }
         if (data < root.data) {
@@ -26,7 +27,7 @@ class BinaryTree {
     }
 
     // In-order traversal (Left, Root, Right)
-    void inOrder(TreeNode root) {
+    void inOrder(Node root) {
         if (root != null) {
             inOrder(root.left);
             System.out.print(root.data + " ");
@@ -35,7 +36,7 @@ class BinaryTree {
     }
 
     // Pre-order traversal (Root, Left, Right)
-    void preOrder(TreeNode root) {
+    void preOrder(Node root) {
         if (root != null) {
             System.out.print(root.data + " ");
             preOrder(root.left);
@@ -44,7 +45,7 @@ class BinaryTree {
     }
 
     // Post-order traversal (Left, Right, Root)
-    void postOrder(TreeNode root) {
+    void postOrder(Node root) {
         if (root != null) {
             postOrder(root.left);
             postOrder(root.right);
@@ -53,7 +54,7 @@ class BinaryTree {
     }
 
     // Delete a node from the binary search tree
-    TreeNode deleteNode(TreeNode root, int data) {
+    Node deleteNode(Node root, int data) {
         if (root == null) return root;
 
         // Traverse the tree to find the node to delete
@@ -78,7 +79,7 @@ class BinaryTree {
     }
 
     // Find the minimum value in the tree
-    int minValue(TreeNode root) {
+    int minValue(Node root) {
         int minValue = root.data;
         while (root.left != null) {
             minValue = root.left.data;
