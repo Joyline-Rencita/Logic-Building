@@ -27,3 +27,28 @@ public class CoinChange {
         System.out.println("Minimum coins needed: " + cc.coinChange(coins, amount)); // Output: 3
     }
 }
+
+
+// Approach : 2
+
+public static int coinChange(int[] coins, int amount) {
+    if (coins == null || coins.length == 0 || amount <= 0)
+        return 0;
+
+    int[] minNumber = new int[amount + 1];
+
+    // Initialize the array with a large value for all amounts
+    for (int i = 1; i <= amount; i++) {
+        minNumber[i] = Integer.MAX_VALUE;
+        
+        // Loop over all coins and calculate the minimum number of coins
+        for (int j = 0; j < coins.length; j++) {
+            if (coins[j] <= i && minNumber[i - coins[j]] != Integer.MAX_VALUE) {
+                minNumber[i] = Integer.min(minNumber[i], 1 + minNumber[i - coins[j]]);
+            }
+        }
+    }
+
+    // Return the result for the target amount
+    return minNumber[amount] == Integer.MAX_VALUE ? -1 : minNumber[amount];
+}
