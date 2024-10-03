@@ -174,7 +174,19 @@ Queries :
 | John Doe     |
 +--------------+
 
-7. Show first name, last name, and the full province name of each patient.
+7. Show first name, last name, and the full province name of each patient. 
+    mysql> select first_name, last_name, province_name
+    from patients join province_names ON 
+    patients.province_id = province_names.province_id;
++------------+-----------+---------------+
+| first_name | last_name | province_name |
++------------+-----------+---------------+
+| John       | Doe       | Ontario       |
+| Jane       | Smith     | Ontario       |
+| Chris      | Brown     | Ontario       |
+| Emily      | Clark     | Nova Scotia   |
+| David      | Maroni    | Ontario       |
++------------+-----------+---------------+
 
 8. Show how many patients have a birth_date with 2010 as the birth year.
     mysql> select count(birth_date) from patients where birth_date like "%2010%";
