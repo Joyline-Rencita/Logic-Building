@@ -63,47 +63,50 @@ INSERT INTO province_names (province_id, province_name) VALUES
 ('NS', 'Nova Scotia'),
 ('QC', 'Quebec');
 
+All Values : 
+select * from patients;
++------------+------------+-----------+--------+------------+--------+--------+------------+----------+-------------+
+| patient_id | first_name | last_name | gender | birth_date | height | weight | allergies  | city     | province_id |
++------------+------------+-----------+--------+------------+--------+--------+------------+----------+-------------+
+|          1 | John       | Doe       | M      | 1985-03-15 | 180.34 |  75.50 | Penicillin | Toronto  | ON          |
+|          2 | Jane       | Smith     | F      | 1992-07-23 | 160.10 |  60.25 | Morphine   | Hamilton | ON          |
+|          3 | Chris      | Brown     | M      | 2010-12-10 | 120.00 |  50.00 | NULL       | Toronto  | ON          |
+|          4 | Emily      | Clark     | F      | 1975-05-05 | 170.00 |  68.00 | NKA        | Halifax  | NS          |
+|          5 | David      | Maroni    | M      | 1990-08-08 | 190.00 |  85.00 | Peanuts    | Ottawa   | ON          |
++------------+------------+-----------+--------+------------+--------+--------+------------+----------+-------------+
+select * from patients;
++------------+------------+-----------+--------+------------+--------+--------+------------+----------+-------------+
+| patient_id | first_name | last_name | gender | birth_date | height | weight | allergies  | city     | province_id |
++------------+------------+-----------+--------+------------+--------+--------+------------+----------+-------------+
+|          1 | John       | Doe       | M      | 1985-03-15 | 180.34 |  75.50 | Penicillin | Toronto  | ON          |
+|          2 | Jane       | Smith     | F      | 1992-07-23 | 160.10 |  60.25 | Morphine   | Hamilton | ON          |
+|          3 | Chris      | Brown     | M      | 2010-12-10 | 120.00 |  50.00 | NULL       | Toronto  | ON          |
+|          4 | Emily      | Clark     | F      | 1975-05-05 | 170.00 |  68.00 | NKA        | Halifax  | NS          |
+|          5 | David      | Maroni    | M      | 1990-08-08 | 190.00 |  85.00 | Peanuts    | Ottawa   | ON          |
++------------+------------+-----------+--------+------------+--------+--------+------------+----------+-------------+
 
-| patient_id | first_name | last_name | gender | birth_date  | weight | height | city      | province_id | allergies  |
-|------------|------------|-----------|--------|-------------|--------|--------|-----------|-------------|------------|
-| 1          | John       | Doe       | M      | 1980-05-10  | 75     | 180    | Toronto   | ON          | Penicillin |
-| 2          | Jane       | Smith     | F      | 1990-03-15  | 65     | 165    | Hamilton  | ON          | None       |
-| 3          | Chris      | Johnson   | M      | 2000-12-21  | 80     | 170    | Halifax   | NS          | Morphine   |
-| 4          | Leo        | Brown     | M      | 1975-11-25  | 90     | 190    | Vancouver | BC          | NKA        |
-| 5          | Emily      | White     | F      | 2010-07-18  | 50     | 155    | Calgary   | AB          | None       |
-| 6          | Michael    | Maroni    | M      | 1995-01-05  | 85     | 175    | Edmonton  | AB          | Penicillin |
-| 7          | Sarah      | Davis     | F      | 1985-09-09  | 60     | 160    | Hamilton  | ON          | Morphine   |
-| 8          | Paul       | Garcia    | M      | 1978-02-20  | 100    | 185    | Toronto   | ON          | NKA        |
-| 9          | Sophie     | Adams     | F      | 1989-04-25  | 55     | 150    | Halifax   | NS          | None       |
-| 10         | Mark       | Thomas    | M      | 2005-08-12  | 95     | 180    | Toronto   | ON          | Peanuts    |
+select * from admissions;
++--------------+------------+---------------------+----------------+----------------+-----------+
+| admission_id | patient_id | attending_doctor_id | admission_date | discharge_date | diagnosis |
++--------------+------------+---------------------+----------------+----------------+-----------+
+|            6 |          1 |                   1 | 2023-01-15     | 2023-01-20     | Flu       |
+|            7 |          2 |                   2 | 2022-06-01     | 2022-06-05     | Dementia  |
+|            8 |          3 |                   1 | 2021-09-10     | 2021-09-12     | Asthma    |
+|            9 |          4 |                   3 | 2023-07-15     | 2023-07-15     | Dementia  |
+|           10 |          5 |                   1 | 2024-04-10     | 2024-04-12     | Diabetes  |
++--------------+------------+---------------------+----------------+----------------+-----------+
 
-| admission_id | patient_id | admission_date | discharge_date | diagnosis     | attending_doctor_id |
-|--------------|------------|----------------|----------------|---------------|---------------------|
-| 1            | 1          | 2023-09-01     | 2023-09-05     | Flu           | 1                   |
-| 2            | 2          | 2023-08-12     | 2023-08-12     | Allergy       | 2                   |
-| 3            | 3          | 2023-07-22     | 2023-07-28     | Fracture      | 3                   |
-| 4            | 1          | 2022-12-15     | 2022-12-18     | Diabetes      | 2                   |
-| 5            | 4          | 2023-06-01     | 2023-06-10     | Hypertension  | 3                   |
-| 6            | 5          | 2023-05-25     | 2023-05-30     | Asthma        | 1                   |
-| 7            | 6          | 2023-03-15     | 2023-03-20     | Dementia      | 2                   |
-| 8            | 7          | 2023-01-10     | 2023-01-10     | Flu           | 1                   |
-| 9            | 8          | 2022-11-22     | 2022-11-25     | COVID-19      | 3                   |
-| 10           | 9          | 2022-10-05     | 2022-10-08     | Pneumonia     | 2                   |
+select * from province_names;
++-------------+---------------+
+| province_id | province_name |
++-------------+---------------+
+| NS          | Nova Scotia   |
+| ON          | Ontario       |
+| QC          | Quebec        |
++-------------+---------------+
 
+Queries : 
 
-| doctor_id | first_name | last_name |
-|-----------|------------|-----------|
-| 1         | Dr. Alan   | Grant     |
-| 2         | Dr. Ellie  | Sattler   |
-| 3         | Dr. Ian    | Malcolm   |
+1. Show first name, last name, and gender of patients whose gender is 'M'.
 
-| province_id | province_name      |
-|-------------|--------------------|
-| ON          | Ontario            |
-| NS          | Nova Scotia        |
-| BC          | British Columbia   |
-| AB          | Alberta            |
-
-
-Queries: 
-
+    
