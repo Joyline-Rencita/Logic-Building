@@ -177,6 +177,12 @@ Queries :
 7. Show first name, last name, and the full province name of each patient.
 
 8. Show how many patients have a birth_date with 2010 as the birth year.
+    mysql> select count(birth_date) from patients where birth_date like "%2010%";
++-------------------+
+| count(birth_date) |
++-------------------+
+|                 1 |
++-------------------+
 
 9. Show the first_name, last_name, and height of the patient with the greatest height.
 
