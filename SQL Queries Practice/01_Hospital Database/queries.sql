@@ -109,4 +109,94 @@ Queries :
 
 1. Show first name, last name, and gender of patients whose gender is 'M'.
 
+ mysql> select first_name, last_name,gender from patients where gender = "m";
++------------+-----------+--------+
+| first_name | last_name | gender |
++------------+-----------+--------+
+| John       | Doe       | M      |
+| Chris      | Brown     | M      |
+| David      | Maroni    | M      |
++------------+-----------+--------+
+
+2. Show first name and last name of patients who does not have allergies. (null).
+     select first_name, last_name from patients where allergies is null;
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| Chris      | Brown     |
++------------+-----------+
+
+3. Show first name of patients that start with the letter 'C'.
+    mysql> select first_name from patients where first_name like 'ç%';
++------------+
+| first_name |
++------------+
+| Chris      |
++------------+
+
+4. Show first name and last name of patients that weight within the range of 100 to 120
+(inclusive).
+    mysql> select first_name, last_name from patients where weight between 100 and 120;
+    Empty set (0.01 sec)
+
+    mysql> select first_name, last_name from patients where weight between 70 and 120;
+    +------------+-----------+
+    | first_name | last_name |
+    +------------+-----------+
+    | John       | Doe       |
+    | David      | Maroni    |
+    +------------+-----------+
+
+5. Update the patients table for the allergies column. If the patient''s allergies is null then
+    replace it with 'NKA'.
+
+    mysql> update patients set allergies = "NKA" where allergies is null;
+    mysql> select * from patients;
++------------+------------+-----------+--------+------------+--------+--------+------------+----------+-------------+
+| patient_id | first_name | last_name | gender | birth_date | height | weight | allergies  | city     | province_id |
++------------+------------+-----------+--------+------------+--------+--------+------------+----------+-------------+
+|          1 | John       | Doe       | M      | 1985-03-15 | 180.34 |  75.50 | Penicillin | Toronto  | ON          |
+|          2 | Jane       | Smith     | F      | 1992-07-23 | 160.10 |  60.25 | Morphine   | Hamilton | ON          |
+|          3 | Chris      | Brown     | M      | 2010-12-10 | 120.00 |  50.00 | NKA        | Toronto  | ON          |
+|          4 | Emily      | Clark     | F      | 1975-05-05 | 170.00 |  68.00 | NKA        | Halifax  | NS          |
+|          5 | David      | Maroni    | M      | 1990-08-08 | 190.00 |  85.00 | Peanuts    | Ottawa   | ON          |
++------------+------------+-----------+--------+------------+--------+--------+------------+----------+-------------+
+
+6. Show first name and last name concatinated into one column to show their full name.
+    mysql> SELECT CONCAT(first_name, " ", last_name) AS `Full Name` FROM patients;
++--------------+
+| Full Name    |
++--------------+
+| Chris Brown  |
+| David Maroni |
+| Emily Clark  |
+| Jane Smith   |
+| John Doe     |
++--------------+
+
+7. Show first name, last name, and the full province name of each patient.
+
+8. Show how many patients have a birth_date with 2010 as the birth year.
+
+9. Show the first_name, last_name, and height of the patient with the greatest height.
+
+10.  Show all columns for patients who have one of these patient_ids: 1,45,534,879,1000.
+
+11. Show the total number of admissions.
+
+12. Show all the columns from admissions where the patient was admitted and discharged
+on the same day.
+
+13. Show the patient id and the total number of admissions for patient_id 579.
+
+14. Based on the cities that our patients live in, show unique cities that are in province_id
+'NS'?
+
+
+15. Write a query to find the first_name, last name and birth date of patients who has height
+greater than 160 and weight greater than 70.
+
+16. Write a query to find list of patients first_name, last_name, and allergies where allergies
+are not null and are from the city of 'Hamilton'
+
     
