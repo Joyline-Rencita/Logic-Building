@@ -197,6 +197,17 @@ Queries :
 +-------------------+
 
 9. Show the first_name, last_name, and height of the patient with the greatest height.
+select first_name, last_name, max(height)
+from patients
+group by first_name, last_name
+order by max(height) desc
+limit 1;
+OR if you want to use AS:
+select first_name, last_name, max(height) as height
+from patients
+group by first_name, last_name
+order by height desc
+limit 1;
 
 10.  Show all columns for patients who have one of these patient_ids: 1,45,534,879,1000.
 
