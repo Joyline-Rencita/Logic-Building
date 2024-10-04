@@ -210,11 +210,15 @@ order by height desc
 limit 1;
 
 10.  Show all columns for patients who have one of these patient_ids: 1,45,534,879,1000.
+    select * from patients where patient_id in (1,45,534,879,1000);
 
 11. Show the total number of admissions.
+    select count(admission_date) from admissions;
 
 12. Show all the columns from admissions where the patient was admitted and discharged
 on the same day.
+
+    select * from admissions where admission_date = discharge_date;
 
 13. Show the patient id and the total number of admissions for patient_id 579.
 
