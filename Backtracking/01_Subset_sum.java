@@ -1,6 +1,7 @@
 package subset;
 import java.util.Scanner;
 
+
 public class Subset {
 
     void subset(int n, int d, int[] w) {
