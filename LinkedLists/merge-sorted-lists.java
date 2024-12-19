@@ -9,5 +9,6 @@ class Solution {
     }
     list1.next = mergeTwoLists(list1.next, list2);
     return list1;
+
   }
 }
