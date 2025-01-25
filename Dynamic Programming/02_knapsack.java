@@ -60,3 +60,5 @@ public class Knapsackdp1 {
         ks.calculate(wt, val, W, n);
     }
 }
+
+
