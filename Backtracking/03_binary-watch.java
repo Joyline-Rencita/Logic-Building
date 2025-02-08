@@ -7,7 +7,9 @@ class Solution {
                     ans.add(String.format("%d:%02d", i, j));
                 }
             }
+
         }
         return ans;
+
     }
 }
