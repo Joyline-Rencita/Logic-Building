@@ -8,6 +8,7 @@ public class CoinChange {
         dp[0] = 0; // Base case: no coins needed to make amount 0
 
         // Step 2: Fill dp array
+
         for (int i = 1; i <= amount; i++) {
             for (int coin : coins) {
                 if (coin <= i) {
