@@ -33,14 +33,8 @@ Logic:  Sliding window or 2 pointer approach
 Initialize two pointers, start and end, both set to the beginning of the array.
 Use a variable current_sum to keep track of the sum of the current subarray.
 Move the end pointer to expand the window by adding the value of the current element to current_sum.
-If current_sum exceeds the target sum 
-𝑠
-s, move the start pointer to the right to reduce the window size until current_sum is less than or equal to 
-𝑠
-s.
-If current_sum equals 
-𝑠
-s, return the current indices adjusted for 1-based indexing.
+If current_sum exceeds the target sum  s, move the start pointer to the right to reduce the window size until current_sum is less than or equal to  𝑠
+If current_sum equals  s, return the current indices adjusted for 1-based indexing.
 If the end of the array is reached and no such subarray is found, return [-1].
 
 CODE:
