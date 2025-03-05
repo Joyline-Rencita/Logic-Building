@@ -17,6 +17,7 @@ Constraints:
 0 <= left <= right <= 231 - 1
     
 //****************************************
+ 
 Solution :
 
 class Solution {
