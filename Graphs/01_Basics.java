@@ -7,7 +7,6 @@ class Graph {
     public Graph() {
         adjList = new HashMap<>();
     }
-
     // Method to add a new vertex
     public void addVertex(int vertex) {
         adjList.putIfAbsent(vertex, new ArrayList<>());
