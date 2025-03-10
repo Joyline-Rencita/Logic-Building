@@ -4,7 +4,6 @@ package knapsackdp1;
 import java.util.Scanner;
 
 public class Knapsackdp1 {
-    
     public void calculate(int[] wt, int[] val, int W, int n) {
         int i, j;
         int[][] V = new int[n + 1][W + 1];
