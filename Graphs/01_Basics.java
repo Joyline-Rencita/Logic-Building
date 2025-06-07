@@ -123,6 +123,7 @@ public class GraphExample {
         graph.bfs(1);
 
         // Deleting an edge between vertex 1 and 2
+
         System.out.println("Deleting edge between 1 and 2");
         graph.removeEdge(1, 2);
         graph.printGraph();
