@@ -22,7 +22,6 @@ class Solution {
     public void flatten(TreeNode root) {
         while (root != null) {
             if (root.left != null) {
-                // 找到当前节点左子树的最右节点
                 TreeNode pre = root.left;
                 while (pre.right != null) {
                     pre = pre.right;
