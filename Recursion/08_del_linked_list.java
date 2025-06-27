@@ -11,21 +11,17 @@ class Node {
 // Given the head of a list, delete the list using recursion
 public class main {
      static void deleteList(Node curr) {
-        
-        // Base case: If the list is empty, return
-        if (curr == null) {
+
+        if (curr == null) {                                 // Base case: If the list is empty, return
             return;
         }
-        // Recursively delete the next node
-        deleteList(curr.next);
         
-        // Delete the current node
-        curr = null;
+        deleteList(curr.next);                             // Recursively delete the next node
+        curr = null;                                        // Delete the current node
     }
 
     public static void main(String[] args) {
-        // Create a hard-coded linked list:
-        // 1 -> 2 -> 3 -> 4 -> 5
+        // Create a hard-coded linked list:  1 -> 2 -> 3 -> 4 -> 5
         Node head = new Node(1);
         head.next = new Node(2);
         head.next.next = new Node(3);
