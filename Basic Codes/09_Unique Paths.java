@@ -9,18 +9,22 @@ Solution :
 
 class Solution {
     public int uniquePaths(int m, int n) {
-        var f = new int[m][n];
-        f[0][0] = 1;
-        for (int i = 0; i < m; ++i) {
+        
+        var f = new int[m][n];                          // Create a 2D array to store the number of unique paths to each cell   
+        f[0][0] = 1;                                    // Base case: there is only one way to reach the starting cell (top-left)
+
+        for (int i = 0; i < m; ++i) {                   // Iterate through each cell in the grid
             for (int j = 0; j < n; ++j) {
-                if (i > 0) {
+
+                if (i > 0) {                             // If not in the first row, add the number of ways to reach the cell from the top
                     f[i][j] += f[i - 1][j];
                 }
-                if (j > 0) {
+
+                if (j > 0) {                              // If not in the first column, add the number of ways to reach the cell from the left
                     f[i][j] += f[i][j - 1];
                 }
             }
         }
-        return f[m - 1][n - 1];
+        return f[m - 1][n - 1];                         // The answer is the number of unique paths to reach the bottom-right cell
     }
 }
