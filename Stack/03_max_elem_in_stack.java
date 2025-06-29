@@ -1,4 +1,5 @@
 import java.util.Stack;
+
 public class MaxElementInStack
 {
 	public static void main(String[] args)
