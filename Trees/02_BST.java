@@ -88,6 +88,16 @@ class BinarySearchTree {
         return minValue;
     }
 
+    // Find the maximum value in the tree
+    int maxValue(Node root) {
+        int maxValue = root.data;
+        while (root.right != null) {
+            maxValue = root.right.data;
+            root = root.right;
+        }
+        return maxValue;
+    }
+
     public static void main(String[] args) {
         BinarySearchTree tree = new BinarySearchTree();
 
