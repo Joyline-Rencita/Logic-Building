@@ -244,6 +244,12 @@ Queries :
 11. Show the total number of admissions.
     select count(admission_date) from admissions;
 
++-----------------------+
+| count(admission_date) |
++-----------------------+
+|                     5 |
++-----------------------+
+
 12. Show all the columns from admissions where the patient was admitted and discharged
 on the same day.
 
