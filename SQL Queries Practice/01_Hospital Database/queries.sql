@@ -15,8 +15,6 @@ show tables;
 | province_names     |
 +--------------------+
 
- 
-
 CREATE TABLE patients (
     patient_id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(100),
@@ -216,20 +214,32 @@ Queries :
 +-------------------+
 
 9. Show the first_name, last_name, and height of the patient with the greatest height.
-select first_name, last_name, max(height)
-from patients
-group by first_name, last_name
-order by max(height) desc
-limit 1;
-OR if you want to use AS:
-select first_name, last_name, max(height) as height
-from patients
-group by first_name, last_name
-order by height desc
-limit 1;
+  select first_name, last_name, max(height)
+  from patients
+  group by first_name, last_name
+  order by max(height) desc
+  limit 1;
+  OR if you want to use AS:
+  select first_name, last_name, max(height) as height
+  from patients
+  group by first_name, last_name
+  order by height desc
+  limit 1;
+
++------------+-----------+-------------+
+| first_name | last_name | max(height) |
++------------+-----------+-------------+
+| David      | Maroni    |      190.00 |
++------------+-----------+-------------+
 
 10.  Show all columns for patients who have one of these patient_ids: 1,45,534,879,1000.
     select * from patients where patient_id in (1,45,534,879,1000);
+
++------------+------------+-----------+--------+------------+--------+--------+------------+---------+-------------+
+| patient_id | first_name | last_name | gender | birth_date | height | weight | allergies  | city    | province_id |
++------------+------------+-----------+--------+------------+--------+--------+------------+---------+-------------+
+|          1 | John       | Doe       | M      | 1985-03-15 | 180.34 |  75.50 | Penicillin | Toronto | ON          |
++------------+------------+-----------+--------+------------+--------+--------+------------+---------+-------------+
 
 11. Show the total number of admissions.
     select count(admission_date) from admissions;
