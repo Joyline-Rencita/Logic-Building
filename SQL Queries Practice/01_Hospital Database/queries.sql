@@ -1,6 +1,8 @@
 mysql -u root -p 
 *******@xxx
 
+ show databases;
+
 
 
 CREATE TABLE patients (
