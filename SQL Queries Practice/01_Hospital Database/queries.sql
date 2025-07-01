@@ -3,6 +3,7 @@ mysql -u root -p
 
  show databases;
 
+use hospital;
 
 
 CREATE TABLE patients (
