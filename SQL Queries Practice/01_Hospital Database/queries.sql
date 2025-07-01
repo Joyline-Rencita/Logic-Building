@@ -1,10 +1,21 @@
 mysql -u root -p 
 *******@xxx
 
- show databases;
+show databases;
 
 use hospital;
 
+show tables;
++--------------------+
+| Tables_in_hospital |
++--------------------+
+| admissions         |
+| doctors            |
+| patients           |
+| province_names     |
++--------------------+
+
+ 
 
 CREATE TABLE patients (
     patient_id INT PRIMARY KEY AUTO_INCREMENT,
