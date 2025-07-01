@@ -281,3 +281,13 @@ where allergies is not null and city = "Hamilton";
     from patients
     group by first_name
     having count(first_name ="Leo") = 1;
+
++------------+
+| first_name |
++------------+
+| Chris      |
+| David      |
+| Emily      |
+| Jane       |
+| John       |
++------------+
