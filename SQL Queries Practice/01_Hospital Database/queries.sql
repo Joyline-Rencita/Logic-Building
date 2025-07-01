@@ -1,3 +1,8 @@
+mysql -u root -p 
+*******@xxx
+
+
+
 CREATE TABLE patients (
     patient_id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(100),
