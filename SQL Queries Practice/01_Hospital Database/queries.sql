@@ -255,16 +255,35 @@ on the same day.
 
     select * from admissions where admission_date = discharge_date;
 
++--------------+------------+---------------------+----------------+----------------+-----------+
+| admission_id | patient_id | attending_doctor_id | admission_date | discharge_date | diagnosis |
++--------------+------------+---------------------+----------------+----------------+-----------+
+|            9 |          4 |                   3 | 2023-07-15     | 2023-07-15     | Dementia  |
++--------------+------------+---------------------+----------------+----------------+-----------+
+
 13. Show the patient id and the total number of admissions for patient_id 579.
     select patient_id, count(admission_date) from admissions where patient_id = 579;
++------------+-----------------------+
+| patient_id | count(admission_date) |
++------------+-----------------------+
+|       NULL |                     0 |
++------------+-----------------------+
 
 14. Based on the cities that our patients live in, show unique cities that are in province_id
 'NS'?
     select distinct(city) from patients where province_id = "NS";
 
++---------+
+| city    |
++---------+
+| Halifax |
++---------+
+
 15. Write a query to find the first_name, last name and birth date of patients who has height
 greater than 160 and weight greater than 70.
     select first_name, last_name, birth_date from patients where height > 160 and weight > 70;
+
+
 
 16. Write a query to find list of patients first_name, last_name, and allergies where allergies
 are not null and are from the city of 'Hamilton'
