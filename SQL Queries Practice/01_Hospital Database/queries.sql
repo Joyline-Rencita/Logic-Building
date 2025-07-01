@@ -263,16 +263,33 @@ greater than 160 and weight greater than 70.
 16. Write a query to find list of patients first_name, last_name, and allergies where allergies
 are not null and are from the city of 'Hamilton'
 
-select first_name, last_name, allergies
-from patients
-where allergies is not null and city = "Hamilton";
+    select first_name, last_name, allergies
+    from patients
+    where allergies is not null and city = "Hamilton";
+
++------------+-----------+-----------+
+| first_name | last_name | allergies |
++------------+-----------+-----------+
+| Jane       | Smith     | Morphine  |
++------------+-----------+-----------+
 
 
 17. Show unique birth years from patients and order them by ascending.
 
     select distinct(year(birth_date)) as birth_year
     from patients
-    order by birth_year;    
+    order by birth_year;  
+
++------------+
+| birth_year |
++------------+
+|       1975 |
+|       1985 |
+|       1990 |
+|       1992 |
+|       2010 |
++------------+
+
 
 18. Show unique first names from the patients table which only occurs once in the list. For example, if two or more people are named 'John' in the first_name 
     column then do not include their name in the output list. If only 1 person is named 'Leo' then include them in the output.
