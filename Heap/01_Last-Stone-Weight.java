@@ -11,7 +11,6 @@ class Solution {
                 q.offer(y - x);
             }
         }
-
         return q.isEmpty() ? 0 : q.poll();
     }
 }
