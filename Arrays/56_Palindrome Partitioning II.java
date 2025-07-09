@@ -17,6 +17,8 @@ Constraints:
 1 <= s.length <= 2000
 s consists of lowercase English letters only.
 
+  CODE:
+
 class Solution {
     public int minCut(String s) {
         int n = s.length();
