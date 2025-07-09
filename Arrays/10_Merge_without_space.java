@@ -35,7 +35,6 @@ class Solution
                 break;
             }
         }
-
         // Sort arr1[] and arr2[] individually:
         Arrays.sort(arr1);
         Arrays.sort(arr2);
