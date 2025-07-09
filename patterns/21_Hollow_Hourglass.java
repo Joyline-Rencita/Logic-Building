@@ -17,8 +17,7 @@ public class Main {
                     System.out.print("  ");
             }
 
-            // printing new line for each row
-            System.out.println();
+            System.out.println();                          // printing new line for each row
         }
 
         // Printing the lower part
