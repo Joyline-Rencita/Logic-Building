@@ -8,6 +8,7 @@ class Solution {
                 return digits;
             }
         }
+        
         digits = new int[n + 1];
         digits[0] = 1;
         return digits;
