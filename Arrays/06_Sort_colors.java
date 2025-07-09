@@ -8,16 +8,14 @@ public class Solution {
 
         while (mid <= high) {
             switch (nums[mid]) {
-                case 0:
-                    // Swap nums[low] and nums[mid]
+                case 0:                            // Swap nums[low] and nums[mid]
                     int temp0 = nums[low];
                     nums[low] = nums[mid];
                     nums[mid] = temp0;
                     low++;
                     mid++;
                     break;
-                case 1:
-                    // If the element is 1, just move mid to the next element
+                case 1:                             // If the element is 1, just move mid to the next element
                     mid++;
                     break;
                 case 2:
