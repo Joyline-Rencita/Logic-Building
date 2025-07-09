@@ -9,12 +9,10 @@ public class Solution {
                 if (j > i) {
                     System.out.print(" ");
                 } else {
-                    // Otherwise, print a hash symbol ("#")
-                    System.out.print("#");
+                    System.out.print("#");                   // Otherwise, print a hash symbol ("#")
                 }
             }
-            // Move to the next line after printing each row
-            System.out.println();
+            System.out.println();                            // Move to the next line after printing each row
         }
     }
 }
