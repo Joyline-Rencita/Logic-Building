@@ -1,7 +1,6 @@
 /*
  *  Java Program to Implement Singly Linked List
  */
- 
 import java.util.Scanner;
  
 /*  Class Node  */
