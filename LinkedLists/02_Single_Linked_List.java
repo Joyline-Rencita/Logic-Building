@@ -73,7 +73,6 @@ class SinglyLinkedList {
             size++;
         }
     }
-
     /* Function to delete an element at a specific position */
     public void deleteAtPos(int pos) {
         if (pos < 1 || pos > size) {
@@ -91,7 +90,6 @@ class SinglyLinkedList {
         }
         size--;
     }
-
     /* Function to reverse the linked list */
     public void reverseList() {
         Node prev = null, current = head, next;
