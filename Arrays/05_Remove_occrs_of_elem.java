@@ -28,4 +28,5 @@ class Test {
         System.out.println("Original array: " + Arrays.toString(arr));
         System.out.println("Array after removing " + elem + ": " + Arrays.toString(newArr));
     }
+    
 }
