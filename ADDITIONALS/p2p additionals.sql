@@ -1,0 +1,422 @@
+                                            Transformation 
+                                              
+********************************************************************************************************
+
+Activity 1 : Vendor Creates Invoice
+
+INSERT INTO _CEL_AP_ACTIVITIES
+(
+  _CASE_KEY
+, _ACTIVITY_EN
+, _EVENTTIME
+, _SORTING
+)
+SELECT
+      BSEG.MANDT||BSEG.BUKRS||BSEG.BELNR||BSEG.GJAHR||BSEG.BUZEI AS _CASE_KEY
+    , 'Vendor creates invoice' AS _ACTIVITY_EN
+    , BKPF.BLDAT AS _EVENTTIME
+    , 0 AS _SORTING
+FROM BSEG AS BSEG
+JOIN BKPF AS BKPF ON 1=1
+    AND BSEG.MANDT=BKPF.MANDT
+    AND BSEG.BUKRS=BKPF.BUKRS
+    AND BSEG.BELNR=BKPF.BELNR
+    AND BSEG.GJAHR=BKPF.GJAHR
+    AND BSEG.BSCHL = '31'
+    AND BKPF.BLDAT IS NOT NULL
+;
+
+A slightly less performant script with WHERE conditions outside of the JOIN:
+
+INSERT INTO _CEL_AP_ACTIVITIES(
+"_CASE_KEY"
+,"_ACTIVITY"
+,"_EVENTTIME"
+,"_SORTING"
+)
+SELECT DISTINCT
+    "BSEG"."MANDT"||"BSEG"."BUKRS"||"BSEG"."BELNR"||"BSEG"."GJAHR"||"BSEG"."BUZEI" AS "_CASE_KEY",
+    'Vendor creates invoice' AS "_ACTIVITY",
+    "BKPF"."BLDAT" AS "_EVENTTIME",
+    0 AS "_SORTING"
+FROM "BSEG" 
+JOIN "BKPF" ON 1=1
+    AND "BSEG"."MANDT"="BKPF"."MANDT"
+    AND "BSEG"."BUKRS"="BKPF"."BUKRS"
+    AND "BSEG"."BELNR"="BKPF"."BELNR"
+    AND "BSEG"."GJAHR"="BKPF"."GJAHR"
+WHERE 1=1
+    AND "BSEG"."BSCHL" = '31'
+    AND "BKPF"."BLDAT" IS NOT NULL;
+
+
+=======================================================================================================================
+
+
+Activity 2 :    Enter Invoice in SAP
+
+INSERT INTO _CEL_AP_ACTIVITIES
+(
+  _CASE_KEY
+, _ACTIVITY_EN
+, _EVENTTIME
+, _SORTING
+)
+SELECT
+    BSEG.MANDT||BSEG.BUKRS||BSEG.BELNR||BSEG.GJAHR||BSEG.BUZEI AS _CASE_KEY
+    , 'Enter Invoice in SAP' AS _ACTIVITY_EN
+    , CAST(BKPF.CPUDT AS DATE) + CAST(BKPF.CPUTM AS TIME) AS _EVENTTIME
+    , 10 AS _SORTING
+FROM BSEG AS BSEG
+JOIN BKPF AS BKPF ON 1=1
+    AND BSEG.MANDT=BKPF.MANDT
+    AND BSEG.BUKRS=BKPF.BUKRS
+    AND BSEG.BELNR=BKPF.BELNR
+    AND BSEG.GJAHR=BKPF.GJAHR
+        AND BSEG.BSCHL = '31'
+        AND BKPF.CPUDT IS NOT NULL
+        AND BKPF.CPUTM IS NOT NULL
+;
+
+A slightly less performant script with WHERE outside of the JOIN and using SELECT DISTINCT
+
+
+INSERT INTO _CEL_AP_ACTIVITIES(
+"_CASE_KEY"
+,"_ACTIVITY"
+,"_EVENTTIME"
+,"_SORTING"
+)
+SELECT DISTINCT
+    "BSEG"."MANDT"||"BSEG"."BUKRS"||"BSEG"."BELNR"||"BSEG"."GJAHR"||"BSEG"."BUZEI" AS "_CASE_KEY",
+    'Enter invoice in SAP' AS "_ACTIVITY",
+    CAST("BKPF"."CPUDT" AS DATE) + CAST("BKPF"."CPUTM" AS TIME) AS "_EVENTTIME",
+    10 AS "_SORTING"
+FROM "BSEG" 
+JOIN "BKPF" ON 
+    "BSEG"."MANDT"="BKPF"."MANDT"
+    AND "BSEG"."BUKRS"="BKPF"."BUKRS"
+    AND "BSEG"."BELNR"="BKPF"."BELNR"
+    AND "BSEG"."GJAHR"="BKPF"."GJAHR"
+WHERE "BSEG"."BSCHL" = '31'
+    AND "BKPF"."CPUDT" IS NOT NULL
+    AND "BKPF"."CPUTM" IS NOT NULL;
+
+=========================================================================================================================
+
+
+Activity 3 :   Set OR Remove Payment Block
+
+
+INSERT INTO _CEL_AP_ACTIVITIES (
+  _CASE_KEY
+, _ACTIVITY_EN
+, _EVENTTIME
+, _SORTING
+)
+SELECT 
+    BSEG.MANDT||BSEG.BUKRS||BSEG.BELNR||BSEG.GJAHR||BSEG.BUZEI AS _CASE_KEY
+    , CASE
+        WHEN CDPOS.VALUE_OLD IS NULL THEN 'Set Payment block' 
+        WHEN CDPOS.VALUE_NEW IS NULL THEN 'Remove Payment block' 
+      END AS _ACTIVITY_EN
+    , CAST(CDHDR.UDATE AS DATE) + CAST(CDHDR.UTIME AS TIME) AS _EVENTTIME
+    , CASE
+        WHEN CDPOS.VALUE_OLD IS NULL THEN 20 
+        WHEN CDPOS.VALUE_NEW IS NULL THEN 30
+      END AS _SORTING
+FROM BSEG AS BSEG
+JOIN CDPOS AS CDPOS ON 1=1
+    AND CDPOS.MANDANT = BSEG.MANDT
+    AND BSEG.MANDT||BSEG.BUKRS||BSEG.BELNR||BSEG.GJAHR||BSEG.BUZEI=CDPOS.TABKEY
+    AND CDPOS.TABNAME='BSEG'
+    AND CDPOS.FNAME = 'ZLSPR'
+    AND (CDPOS.VALUE_OLD IS NULL OR CDPOS.VALUE_NEW IS NULL)
+JOIN CDHDR AS CDHDR ON 1=1
+    AND CDHDR.MANDANT = CDPOS.MANDANT
+    AND    CDHDR.CHANGENR=CDPOS.CHANGENR
+    AND CDHDR.OBJECTCLAS = CDPOS.OBJECTCLAS
+    AND CDHDR.OBJECTID = CDPOS.OBJECTID
+WHERE 1=1
+    AND BSEG.BSCHL = '31'
+    AND EXISTS (
+        SELECT 1 FROM BKPF WHERE 1=1
+            AND BSEG.MANDT=BKPF.MANDT
+            AND BSEG.BUKRS=BKPF.BUKRS
+            AND BSEG.BELNR=BKPF.BELNR
+            AND BSEG.GJAHR=BKPF.GJAHR
+);
+
+
+An alternative with the WHERE EXISTS as a JOIN:
+
+
+INSERT INTO _CEL_AP_ACTIVITIES (
+  _CASE_KEY
+, _ACTIVITY_EN
+, _EVENTTIME
+, _SORTING
+)
+SELECT 
+    BSEG.MANDT||BSEG.BUKRS||BSEG.BELNR||BSEG.GJAHR||BSEG.BUZEI AS _CASE_KEY
+    , CASE
+        WHEN CDPOS.VALUE_OLD IS NULL THEN 'Set Payment block' 
+        WHEN CDPOS.VALUE_NEW IS NULL THEN 'Remove Payment block' 
+      END AS _ACTIVITY_EN
+    , CAST(CDHDR.UDATE AS DATE) + CAST(CDHDR.UTIME AS TIME) AS _EVENTTIME
+    , CASE
+        WHEN CDPOS.VALUE_OLD IS NULL THEN 20 
+        WHEN CDPOS.VALUE_NEW IS NULL THEN 30
+      END AS _SORTING
+FROM BSEG AS BSEG
+JOIN BKPF AS BKPF ON 1=1
+    AND BSEG.MANDT=BKPF.MANDT
+    AND BSEG.BUKRS=BKPF.BUKRS
+    AND BSEG.BELNR=BKPF.BELNR
+    AND BSEG.GJAHR=BKPF.GJAHR
+        AND BSEG.BSCHL = '31'
+JOIN CDPOS AS CDPOS ON 1=1
+    AND CDPOS.MANDANT = BSEG.MANDT
+    AND BSEG.MANDT||BSEG.BUKRS||BSEG.BELNR||BSEG.GJAHR||BSEG.BUZEI=CDPOS.TABKEY
+        AND CDPOS.TABNAME='BSEG'
+    AND CDPOS.FNAME = 'ZLSPR'
+        AND (CDPOS.VALUE_OLD IS NULL OR CDPOS.VALUE_NEW IS NULL)
+JOIN CDHDR AS CDHDR ON 1=1
+    AND CDHDR.MANDANT = CDPOS.MANDANT
+    AND CDHDR.CHANGENR=CDPOS.CHANGENR
+    AND CDHDR.OBJECTCLAS = CDPOS.OBJECTCLAS
+    AND CDHDR.OBJECTID = CDPOS.OBJECTID
+    ;
+
+===========================================================================================
+
+
+Activity 4 :   Clear Invoice
+
+
+INSERT INTO _CEL_AP_ACTIVITIES (
+  _CASE_KEY
+, _ACTIVITY_EN
+, _EVENTTIME
+, _SORTING
+)
+SELECT
+    BSEG.MANDT||BSEG.BUKRS||BSEG.BELNR||BSEG.GJAHR||BSEG.BUZEI AS _CASE_KEY
+    , 'Clear Invoice' AS _ACTIVITY_EN
+    , BSEG.AUGDT AS _EVENTTIME
+    , 40 AS _SORTING
+FROM BSEG AS BSEG
+WHERE 1=1
+    AND BSEG.AUGDT IS NOT NULL
+    AND BSEG.BSCHL = '31' 
+    AND EXISTS (
+        SELECT 1 FROM BKPF WHERE 1=1
+        AND BSEG.MANDT=BKPF.MANDT
+        AND BSEG.BUKRS=BKPF.BUKRS
+        AND BSEG.BELNR=BKPF.BELNR
+        AND BSEG.GJAHR=BKPF.GJAHR
+);
+
+
+Here is a similar alternative using JOINs, albeit slightly less performant:
+  
+
+INSERT INTO _CEL_AP_ACTIVITIES(
+"_CASE_KEY"
+,"_ACTIVITY"
+,"_EVENTTIME"
+,"_SORTING"
+)
+SELECT DISTINCT
+    "BSEG"."MANDT"||"BSEG"."BUKRS"||"BSEG"."BELNR"||"BSEG"."GJAHR"||"BSEG"."BUZEI" AS "_CASE_KEY",
+    'Clear Invoice' AS "_ACTIVITY",
+    "BSEG"."AUGDT" AS "_EVENTTIME",
+    40 AS "_SORTING"
+FROM "BSEG" 
+JOIN "BKPF" ON 1=1
+    AND "BSEG"."MANDT"="BKPF"."MANDT"
+    AND "BSEG"."BUKRS"="BKPF"."BUKRS"
+    AND "BSEG"."BELNR"="BKPF"."BELNR"
+    AND "BSEG"."GJAHR"="BKPF"."GJAHR"
+WHERE 1=1
+    AND "BSEG"."BSCHL" = '31'
+    AND "BSEG"."AUGDT" IS NOT NULL;
+
+==============================================================================================
+
+
+Activity 5 :  Due Date Expired
+
+INSERT INTO _CEL_AP_ACTIVITIES
+(
+  _CASE_KEY
+, _ACTIVITY_EN
+, _EVENTTIME
+, _SORTING
+)
+SELECT
+    BSEG.MANDT||BSEG.BUKRS||BSEG.BELNR||BSEG.GJAHR||BSEG.BUZEI AS _CASE_KEY
+    , 'Due date expired' AS _ACTIVITY_EN
+    , CASE 
+        WHEN BSEG.ZBD3T>0
+            THEN CAST((BSEG.ZFBDT + BSEG.ZBD3T)AS DATE)
+        WHEN BSEG.ZBD2T>0
+            THEN CAST((BSEG.ZFBDT + BSEG.ZBD2T)AS DATE)
+        ELSE CAST((BSEG.ZFBDT + BSEG.ZBD1T)AS DATE)
+        END AS _EVENTTIME
+    , 50 AS _SORTING
+FROM BSEG AS BSEG
+WHERE 1=1
+    AND BSEG.BSCHL = '31' 
+    AND BSEG.ZFBDT IS NOT NULL
+    AND EXISTS (
+        SELECT 1 FROM BKPF WHERE 1=1
+            AND BSEG.MANDT=BKPF.MANDT
+            AND BSEG.BUKRS=BKPF.BUKRS
+            AND BSEG.BELNR=BKPF.BELNR
+            AND BSEG.GJAHR=BKPF.GJAHR 
+    )
+;
+
+
+An equivalent script using a JOIN
+
+  
+INSERT INTO _CEL_AP_ACTIVITIES(
+"_CASE_KEY"
+,"_ACTIVITY"
+,"_EVENTTIME"
+,"_SORTING"
+)
+SELECT DISTINCT
+    "BSEG"."MANDT"||"BSEG"."BUKRS"||"BSEG"."BELNR"||"BSEG"."GJAHR"||"BSEG"."BUZEI" AS "_CASE_KEY",
+    'Due date expired' AS "_ACTIVITY",
+    CASE 
+    WHEN "BSEG"."ZBD3T" > 0 THEN "BSEG"."ZBD3T" + "BSEG"."ZFBDT"
+    WHEN "BSEG"."ZBD2T" > 0 THEN "BSEG"."ZBD2T" + "BSEG"."ZFBDT"
+    WHEN "BSEG"."ZBD1T" > 0 THEN "BSEG"."ZBD1T" + "BSEG"."ZFBDT"
+    ELSE "BSEG"."ZFBDT" END AS "_EVENTTIME",
+    50 AS "_SORTING"
+FROM "BSEG" 
+JOIN "BKPF" ON 1=1
+    AND "BSEG"."MANDT"="BKPF"."MANDT"
+    AND "BSEG"."BUKRS"="BKPF"."BUKRS"
+    AND "BSEG"."BELNR"="BKPF"."BELNR"
+    AND "BSEG"."GJAHR"="BKPF"."GJAHR"
+WHERE 1=1
+    AND "BSEG"."BSCHL" = '31'
+    AND "BSEG"."ZFBDT" IS NOT NULL;
+
+
+================================================================================================
+
+    Changing other tables as required :
+
+=================================================================================================
+
+            Table BKPF :
+
+A performant script:
+
+DROP TABLE IF EXISTS AP_BKPF;
+CREATE TABLE AP_BKPF AS
+SELECT BKPF.*
+FROM BKPF AS BKPF
+WHERE EXISTS (
+    SELECT 1 FROM BSEG WHERE 1=1
+        AND BSEG.MANDT=BKPF.MANDT
+        AND BSEG.BUKRS=BKPF.BUKRS
+        AND BSEG.BELNR=BKPF.BELNR
+        AND BSEG.GJAHR=BKPF.GJAHR
+        AND BSEG.BSCHL = '31'
+);
+
+SELECT ANALYZE_STATISTICS ('AP_BKPF');
+
+A less performant but working script
+
+DROP TABLE IF EXISTS "AP_BKPF";
+CREATE TABLE"AP_BKPF" AS
+SELECT DISTINCT 
+    BKPF.*
+FROM "BKPF"
+JOIN "BSEG" ON
+    "BSEG"."MANDT"="BKPF"."MANDT"
+    AND "BSEG"."BUKRS"="BKPF"."BUKRS"
+    AND "BSEG"."BELNR"="BKPF"."BELNR"
+    AND "BSEG"."GJAHR"="BKPF"."GJAHR"
+WHERE "BSEG"."BSCHL" = '31';
+
+
+====================================================================================
+
+
+        Table  BSEG :
+
+
+A performant script:
+
+DROP TABLE IF EXISTS AP_BSEG;
+CREATE TABLE AP_BSEG AS
+SELECT 
+    BSEG.*,
+    "BSEG"."MANDT"||"BSEG"."BUKRS"||"BSEG"."BELNR"||"BSEG"."GJAHR"||"BSEG"."BUZEI" AS "_CASE_KEY"
+FROM BSEG AS BSEG
+WHERE 1=1
+    AND BSEG.BSCHL = '31'
+    AND EXISTS (
+        SELECT 1 FROM BKPF WHERE 1=1
+            AND BSEG.MANDT=BKPF.MANDT
+            AND BSEG.BUKRS=BKPF.BUKRS
+            AND BSEG.BELNR=BKPF.BELNR
+            AND BSEG.GJAHR=BKPF.GJAHR
+);
+
+SELECT ANALYZE_STATISTICS ('AP_BSEG');
+
+A less performant but working script
+
+DROP TABLE IF EXISTS "AP_BSEG";
+CREATE TABLE "AP_BSEG" AS 
+SELECT DISTINCT 
+    "BSEG".*, "BSEG"."MANDT"||"BSEG"."BUKRS"||"BSEG"."BELNR"||"BSEG"."GJAHR"||"BSEG"."BUZEI" AS "_CASE_KEY"
+FROM "BSEG"
+JOIN "BKPF" ON
+    "BSEG"."MANDT"="BKPF"."MANDT"
+    AND "BSEG"."BUKRS"="BKPF"."BUKRS"
+    AND "BSEG"."BELNR"="BKPF"."BELNR"
+    AND "BSEG"."GJAHR"="BKPF"."GJAHR"
+WHERE "BSEG"."BSCHL" = '31';
+
+
+============================================================================================================
+
+
+    Table LFA1 :
+
+
+A performant script: 
+
+DROP TABLE IF EXISTS AP_LFA1;
+CREATE TABLE AP_LFA1 AS
+SELECT LFA1.*
+FROM LFA1 AS LFA1
+WHERE EXISTS (
+    SELECT 1 FROM BSEG WHERE 1=1
+        AND BSEG.MANDT=LFA1.MANDT
+        AND BSEG.LIFNR=LFA1.LIFNR
+        AND BSEG.BSCHL = '31'
+);
+
+SELECT ANALYZE_STATISTICS ('AP_LFA1');
+A less performant but working script
+
+DROP TABLE IF EXISTS "AP_LFA1";
+CREATE TABLE "AP_LFA1" AS 
+SELECT DISTINCT 
+    LFA1.*
+FROM "LFA1"
+JOIN "BSEG" ON
+    "BSEG"."MANDT"="LFA1"."MANDT"
+    AND "BSEG"."LIFNR"="LFA1"."LIFNR"
+WHERE "BSEG"."BSCHL" = '31';
