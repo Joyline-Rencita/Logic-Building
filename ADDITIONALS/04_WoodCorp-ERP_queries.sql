@@ -6,7 +6,20 @@ AVG(
     THEN 1.0 
     ELSE 0.0 
   END
-)
+)    -- 64.46%
+                            Another Approach
+(
+  SUM(
+    CASE 
+      WHEN "_APX_WDCRP_CASES"."DELIVERED_DATE"  <= "_APX_WDCRP_CASES"."PROMISED_DATE"
+      THEN 1.0
+      ELSE 0.0
+    END
+  )
+  /
+  COUNT_TABLE("_APX_WDCRP_CASES")
+)      -- 64.46%
+  
 
 2. Early Delivery:
 AVG(
@@ -166,3 +179,8 @@ AVG (
     )
   )  /   60
 )
+
+
+23. Customer OTIF Rate :
+
+
