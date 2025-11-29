@@ -192,8 +192,17 @@ AVG(
   END
 )  -- 27.79%
 
-
                           Another Approach
-
-
+(
+  SUM(
+    CASE 
+      WHEN "_APX_WDCRP_CASES"."DELIVERED_DATE"  <= "_APX_WDCRP_CASES"."PROMISED_DATE"
+      AND "_APX_WDCRP_CASES"."ORDERED_QUANTITY" = "_APX_WDCRP_CASES". "DELIVERED_QUANTITY"
+      THEN 1.0
+      ELSE 0.0
+    END
+  )
+  /
+  COUNT_TABLE("_APX_WDCRP_CASES")
+)    -- 27.79%
 
