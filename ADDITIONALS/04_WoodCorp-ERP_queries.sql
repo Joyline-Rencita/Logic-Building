@@ -183,4 +183,17 @@ AVG (
 
 23. Customer OTIF Rate :
 
+AVG(
+  CASE 
+    WHEN "_APX_WDCRP_CASES"."PROMISED_DATE" >= "_APX_WDCRP_CASES"."DELIVERED_DATE" 
+    AND "_APX_WDCRP_CASES"."ORDERED_QUANTITY" = "_APX_WDCRP_CASES". "DELIVERED_QUANTITY"
+    THEN 1.0 
+    ELSE 0.0 
+  END
+)  -- 27.79%
+
+
+                          Another Approach
+
+
 
