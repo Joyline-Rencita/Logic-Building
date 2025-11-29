@@ -5,4 +5,10 @@ AVG(CALC_THROUGHPUT(ALL_OCCURRENCE['Process Start'] TO ALL_OCCURRENCE['Process E
     )
 )
 
-2. 
+2.  Automation Rate :
+
+AVG(
+   CASE WHEN "_CEL_O2C_ACTIVITIES"."USER_TYPE" = 'B' 
+        THEN 1.0 
+        ELSE 0.0 
+END)
