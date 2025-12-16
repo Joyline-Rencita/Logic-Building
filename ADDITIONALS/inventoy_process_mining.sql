@@ -70,3 +70,44 @@ CASE
   ELSE 0
 END
 
+
+Shortage Inventory :
+
+CASE
+  WHEN SUM(
+    PU_SUM(
+      "o_celonis_MaterialMasterPlant",
+      CASE
+        WHEN "o_celonis_SalesOrderScheduleLine"."ConfirmedDeliveryDate" <= ADD_MONTHS(TODAY(), 3)
+        THEN "o_celonis_SalesOrderScheduleLine"."ConfirmedQuantity"
+        ELSE 0
+      END
+    )
+  )
+  >
+  SUM(
+    PU_SUM(
+      "o_celonis_MaterialMasterPlant",
+      TO_INT("o_custom_StorageLocation"."UnrestrictedStock")
+       )
+  )
+  THEN
+    SUM(
+      PU_SUM(
+        "o_celonis_MaterialMasterPlant",
+        CASE
+          WHEN "o_celonis_SalesOrderScheduleLine"."ConfirmedDeliveryDate" <= ADD_MONTHS(TODAY(), 3)
+          THEN "o_celonis_SalesOrderScheduleLine"."ConfirmedQuantity"
+          ELSE 0
+        END
+      )
+    )
+    -
+    SUM(
+      PU_SUM(
+        "o_celonis_MaterialMasterPlant",
+        TO_INT("o_custom_StorageLocation"."UnrestrictedStock")
+      )
+    )
+  ELSE 0
+END 
