@@ -111,3 +111,32 @@ CASE
     )
   ELSE 0
 END 
+
+
+Allocation Potentials :
+
+SUM(
+  CASE WHEN
+    PU_SUM(
+      "o_celonis_MaterialMasterPlant",
+      TO_INT("o_custom_StorageLocation"."UnrestrictedStock")
+    )
+    >
+    PU_SUM(
+      "o_celonis_MaterialMasterPlant",
+      -- ("o_celonis_SalesOrderScheduleLine"."ConfirmedQuantity")
+      "o_celonis_SalesOrderItem"."OrderedQuantity"
+    )
+  THEN
+    PU_SUM(
+      "o_celonis_MaterialMasterPlant",
+      TO_INT("o_custom_StorageLocation"."UnrestrictedStock")
+    )  
+    -
+    PU_SUM(
+      "o_celonis_MaterialMasterPlant",
+      -- ("o_celonis_SalesOrderScheduleLine"."ConfirmedQuantity")
+      "o_celonis_SalesOrderItem"."OrderedQuantity"
+    ) 
+  END
+)
