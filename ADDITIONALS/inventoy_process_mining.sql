@@ -6,3 +6,20 @@ SUM(
   ) 
 )
 
+Total Demand ( for 3 months) :
+  
+SUM(
+  PU_SUM(
+    "o_celonis_MaterialMasterPlant",
+    CASE
+      WHEN
+        "o_celonis_SalesOrderScheduleLine"."ConfirmedDeliveryDate"
+        <= ADD_MONTHS(TODAY(), 3)
+      THEN
+        "o_celonis_SalesOrderScheduleLine"."ConfirmedQuantity"
+      ELSE 0
+    END
+  )
+)
+
+
