@@ -139,3 +139,16 @@ SUM(
     ) 
   END
 )
+
+
+Stock ready SO Count:
+
+COUNT(
+ CASE WHEN
+  PU_FIRST("o_celonis_MaterialMasterPlant", TO_INT("o_custom_StorageLocation"."UnrestrictedStock"))
+   >= "o_celonis_SalesOrderItem"."OrderedQuantity"
+ THEN "o_celonis_SalesOrderItem"."ID" END
+)
+
+
+Stock ready SO :
