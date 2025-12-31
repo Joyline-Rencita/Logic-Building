@@ -173,8 +173,21 @@ COUNT(
  AND
   PU_SUM("o_celonis_MaterialMasterPlant", TO_INT("o_custom_StorageLocation"."UnrestrictedStock"))
    >= "o_celonis_SalesOrderItem"."OrderedQuantity"
- THEN "o_celonis_SalesOrderItem"."ID" END
+ THEN "o_celonis_SalesOrderItem"."ID" 
+END
 )
 
 Stock Transfer SO Value:
+
+SUM(
+ CASE WHEN
+  PU_FIRST("o_celonis_MaterialMasterPlant", TO_INT("o_custom_StorageLocation"."UnrestrictedStock"))
+   < "o_celonis_SalesOrderItem"."OrderedQuantity"
+ AND
+  PU_SUM("o_celonis_MaterialMasterPlant", TO_INT("o_custom_StorageLocation"."UnrestrictedStock"))
+   >= "o_celonis_SalesOrderItem"."OrderedQuantity"
+ THEN "o_celonis_SalesOrderItem"."NetAmount" 
+END
+)
+
 
