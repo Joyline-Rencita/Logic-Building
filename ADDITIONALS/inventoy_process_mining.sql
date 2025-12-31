@@ -70,7 +70,6 @@ CASE
   ELSE 0
 END
 
-
 Shortage Inventory :
 
 CASE
