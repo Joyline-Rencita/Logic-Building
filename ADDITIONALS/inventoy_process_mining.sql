@@ -205,3 +205,18 @@ END
 
 Procure To Fulfil Value:
 
+SUM(
+  CASE WHEN
+      -- Condition 1 fails: primary plant stock < ordered qty
+      PU_FIRST("o_celonis_MaterialMasterPlant", TO_INT("o_custom_StorageLocation"."UnrestrictedStock"))
+        < "o_celonis_SalesOrderItem"."OrderedQuantity"
+ 
+      -- Condition 2 fails: No other plant stock available
+      AND PU_SUM(
+            "o_celonis_MaterialMasterPlant",
+            TO_INT("o_custom_StorageLocation"."UnrestrictedStock")
+          ) < "o_celonis_SalesOrderItem"."OrderedQuantity"
+ 
+  THEN "o_celonis_SalesOrderItem"."NetAmount"
+  END
+)
