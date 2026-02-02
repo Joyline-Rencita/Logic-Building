@@ -206,3 +206,9 @@ AVG(
   COUNT_TABLE("_APX_WDCRP_CASES")
 )    -- 27.79%
 
+24. Time to finish production :
+
+AVG(
+  CALC_THROUGHPUT ( FIRST_OCCURRENCE['Start production'] TO LAST_OCCURRENCE['Finished production'], 
+  REMAP_TIMESTAMPS ("_APX_WDCRP_ACTIVITIES"."EVENTTIME", DAYS) ) 
+)
