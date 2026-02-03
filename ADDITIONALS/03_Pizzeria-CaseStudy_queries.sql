@@ -123,3 +123,21 @@ AVG(
 13. Average Delivery Time 
 
 (AVG(CALC_THROUGHPUT(FIRST_OCCURRENCE['Order by phone'] TO LAST_OCCURRENCE['Pizza arrives at customer'], REMAP_TIMESTAMPS("Pizza Events"."EVENTTIME", days)))*24*60)-15
+
+14. First activity date
+    
+YEAR(<% time_round %>(<%=ref_date%>)) 
+<% if(time_round == 'ROUND_YEAR') { %> || ' '  <% } %>
+<% if(time_round == 'ROUND_MONTH') { %>
+|| ' - ' || CASE WHEN LEN(MONTH(<%=ref_date%>) || ' ') = 3 THEN
+' ' || MONTH(<%=ref_date%>) ELSE ' 0' || MONTH(<%=ref_date%>) END <% } %>
+<% if(time_round == 'ROUND_WEEK') { %>
+|| ' - ' || CASE WHEN LEN(CALENDAR_WEEK(<%=ref_date%>) || ' ') = 3 THEN
+' CW ' || CALENDAR_WEEK(<%=ref_date%>) ELSE ' CW 0' || CALENDAR_WEEK(<%=ref_date%>) END <% } %>
+<% if(time_round == 'ROUND_DAY') { %>
+|| ' - ' || CASE WHEN LEN(MONTH(<%=ref_date%>) || ' ') = 3 THEN
+' ' || MONTH(<%=ref_date%>) ELSE ' 0' || MONTH(<%=ref_date%>) END 
+|| ' - ' || CASE WHEN LEN(DAY(<%=ref_date%>) || ' ') = 3 THEN
+' ' || DAY(<%=ref_date%>) ELSE ' 0' || DAY(<%=ref_date%>) END
+<% } %>
+
