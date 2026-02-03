@@ -119,3 +119,7 @@ AVG(
         REMAP_TIMESTAMPS("Pizza_Activity_Table_Pizzeria_Event"."EVENTTIME", MINUTES)
     )
 )
+
+13. Average Delivery Time 
+
+(AVG(CALC_THROUGHPUT(FIRST_OCCURRENCE['Order by phone'] TO LAST_OCCURRENCE['Pizza arrives at customer'], REMAP_TIMESTAMPS("Pizza Events"."EVENTTIME", days)))*24*60)-15
